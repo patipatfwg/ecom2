@@ -27,8 +27,8 @@ $scripts = [
 @section('header_script')
 	{{ Html::style('assets/css/dropdown.custom.css') }}
 @endsection
-@section('content')
 
+@section('content')
 <div ng-app="productApp">
     <div ng-controller="productController">
         <form id="form-submit" class="form-horizontal" autocomplete="off" method="PUT">
@@ -93,6 +93,7 @@ $scripts = [
     </div>
 </div>
 @endsection
+
 @section('footer_script')
     {!! Html::script('assets/js/plugins/forms/tags/tagsinput.min.js') !!}
     {!! Html::script('assets/js/plugins/forms/tags/tokenfield.min.js') !!}
