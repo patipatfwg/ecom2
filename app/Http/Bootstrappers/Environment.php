@@ -37,10 +37,8 @@ class Environment {
                 $environment = 'stagingptvn01';
             } elseif (getenv('ENVIRONMENT') == 'stagingptvn02') {
                 $environment = 'stagingptvn02';
-                //Add if
-            } elseif (getenv('ENVIRONMENT') == 'testtest') {
-                $environment = 'testtest';
             } else {
+                //Add if
                 $environment = 'production';
             }
 

@@ -2,7 +2,6 @@
 $scripts = [
     'datatables',
     'datatablesFixedColumns',
-
     'select2',
     'sweetalert',
     'datetimepicker',
@@ -13,10 +12,10 @@ $scripts = [
 
 @extends('layouts.main')
 
-@section('title', 'Member')
+@section('title', 'Order on Behalf of Customer')
 
 @section('breadcrumb')
-<li class="active">Member</li>
+<li class="active">Order on Behalf of Customer</li>
 @endsection
 
 @section('header_script')@endsection
@@ -53,7 +52,7 @@ $scripts = [
                         {{ Form::text('email', null, [
                             'id'          => 'email',
                             'class'       => 'form-control',
-                            'placeholder' => 'sample@sample.com'
+                            'placeholder' => 'sample@sample.com',
                         ]) }}
                     </div>
                     <div class="col-md-3">
@@ -127,76 +126,11 @@ $scripts = [
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <label>Registration Date (From)</label>
-                        {{ Form::text('start_date', null, [
-                            'id'          => 'start_date',
-                            'class'       => 'form-control',
-                            'placeholder' => 'DD/MM/YYYY'
-                        ]) }}
-                    </div>
-                    <div class="col-md-3">
-                        <label>Registration Date (To)</label>
-                        {{ Form::text('end_date', null, [
-                            'id'          => 'end_date',
-                            'class'       => 'form-control',
-                            'placeholder' => 'DD/MM/YYYY'
-                        ]) }}
-                    </div>
-                    <div class="col-md-3">
-                        <label>Last Login Date (From)</label>
-                        {{ Form::text('start_last_login_date', null, [
-                            'id'          => 'start_last_login_date',
-                            'class'       => 'form-control',
-                            'placeholder' => 'DD/MM/YYYY'
-                        ]) }}
-                    </div>
-                    <div class="col-md-3">
-                        <label>Last Login Date (To)</label>
-                        {{ Form::text('end_last_login_date', null, [
-                            'id'          => 'end_last_login_date',
-                            'class'       => 'form-control',
-                            'placeholder' => 'DD/MM/YYYY'
-                        ]) }}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <label>Customer Type</label>
-                        {{ Form::text('customer_type', null, [
-                            'id'          => 'shop_type',
-                            'class'       => 'form-control',
-                            'placeholder' => 'ID, Type'
-                        ]) }}
-                    </div>
-                    <div class="col-md-3">
-                        <label>Customer Channel</label>
-                        <div class="form-group">
-                            @include('common._select_multiple',[
-                                'data' => config('config.customer_channel'),
-                                'id'   => 'select-customer-channel'
-                            ])
-                            <input type="hidden" name="customer_channel" id="customer_channel">
-                        </div>
-                    </div>
-<!-- #allow order -->
-                    <div class="col-md-6">
-                        <label>Allow Order</label>
-                        <div class="form-group">
-                            {{ Form::checkbox('allow_order', 1) }}
-                            &nbsp;
-                            Allow Order by Store
-                        </div>
-                    </div>
-<!-- End Checkbox in Searchbox --> 
-                </div>
-            </div>
             <div class="clearfix"></div>
             <div class="row">
+                    <input type="hidden" name="start_date" id="start_date" value=''>
+                <input type="hidden" name="customer_channel" id="customer_channel" value="professional">
+                <input type="hidden" name="allow_order" id="allow_order" value="1">
                 {{ Form::button('<i class="icon-search4"></i> Search', array(
                     'type'  => 'submit',
                     'class' => 'pull-right btn bg-teal-400 btn-raised legitRipple legitRipple'
@@ -209,7 +143,7 @@ $scripts = [
 
 <div class="panel">
 	<div class="panel-body table-responsive">
-		<table class="table table-border-gray table-striped datatable-dom-position" id="members-table" data-page-length="10" width="160%">
+		<table class="table table-border-gray table-striped datatable-dom-position" id="mkp-table" data-page-length="10" width="160%">
 			<thead>
 				<tr>
 					<th width="80">No.</th>
@@ -221,10 +155,11 @@ $scripts = [
 					<th>Mobile Number</th>
 					<th>Member Number</th>
 					<th>Company Name/Personal Name</th>
-					<th>Customer Type</th>
+                    <th>Customer Type</th>
+                    <!--
                     <th>Customer Channel</th>
-                    <!-- #allow order FWG -->
                     <th>Allow Order</th>
+                    -->
                     <!-- End th -->
 					<th>Tax ID</th>
 					<th>Date Registered At Store</th>
@@ -251,7 +186,7 @@ $scripts = [
 @section('footer_script')
 <script type="text/javascript">
 
-    var $table = $('#members-table');
+    var $table = $('#mkp-table');
     var $thead = $table.find('thead');
     var $tbody = $table.find('tbody');
 
@@ -339,9 +274,9 @@ $scripts = [
             { data: 'makro_member_card', name: 'makro_member_card' },
             { data: 'shop_name', name: 'business.shop_name' },
             { data: 'shop_type', name: 'business.shop_type' },
-            { data: 'customer_channel', name: 'customer_channel' },
+            //{ data: 'customer_channel', name: 'customer_channel' },
             // #allow order FWG
-            { data: 'allow_order', name: 'allow_order' },
+            //{ data: 'allow_order', name: 'allow_order' },
             // End data
             { data: 'tax_id', name: 'tax_id' },
             { data: 'makro_register_date', name: 'makro_register_date' },
@@ -357,8 +292,6 @@ $scripts = [
 
     $('div.datatable-header').append(`
         @include('common._print_button')&nbsp;
-        
-        @include('common._create_button', ['url' => URL::to('member/create')])
     `);
 
     $('.print-report').on('click', function(event) {
@@ -437,20 +370,6 @@ $scripts = [
 
 </script>
 
-@include('common._datetime_range_script', [
-    'format_start' => 'd/m/Y H:i:00',
-    'format_end'   => 'd/m/Y H:i:00',
-    'refer_start'  => '#start_date',
-    'refer_end'    => '#end_date',
-    'timepicker'   => true,
-    'editable'     => true
-])
-@include('common._datetime_range_script', [
-    'format_start' => 'd/m/Y H:i:00',
-    'format_end'   => 'd/m/Y H:i:00',
-    'refer_start'  => '#start_last_login_date',
-    'refer_end'    => '#end_last_login_date',
-    'timepicker'   => true,
-    'editable'     => true
-])
+
+
 @endsection

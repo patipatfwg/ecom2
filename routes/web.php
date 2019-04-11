@@ -32,9 +32,10 @@ Route::group(['middleware' => ['web','logRequest']], function () {
 		Route::resource('dashboard', 'DashboardController');
 
 		/**
-		 * Buyers
+		 * Order on Behalf of Customer
 		 */
-		Route::resource('buyers', 'BuyersController');
+		Route::resource('mkp', 'mkpController');
+		//Route::any('mkp/data', 'mkpController@anyData');
 
 		/**
 		 * Menus

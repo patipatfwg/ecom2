@@ -81,7 +81,7 @@ return [
         ],
 
         'mongodb' => [
-            'driver'   => env('DB_MONGO_CONNECTION'),
+            'driver'   => env('DB_MONGO_CONNECTION'),  
             'host'     => $mongo_host,
             'port'     => env('DB_MONGO_PORT'),
             'database' => env('DB_MONGO_DATABASE'),
@@ -93,6 +93,7 @@ return [
                 'connectTimeoutMS' => 3000
             ]
         ],
+
     ],
 
     /*

@@ -8,7 +8,7 @@ use Cache;
 use Session;
 use App\Library\Unit;
 
-class MembersRepository extends BaseRepository
+class mkpRepository extends BaseRepository
 {
     private $guzzle;
     private $messages;
@@ -271,7 +271,7 @@ class MembersRepository extends BaseRepository
         if ($params['mode'] === 'profile') {
 
             return [
-                'url'    => $this->memberUrl . 'members/' . $id,
+                'url'    => $this->memberUrl . 'mkp/' . $id,
                 'method' => 'PUT',
                 'params' => [
                     'email'           => $params['email'],
@@ -539,13 +539,13 @@ class MembersRepository extends BaseRepository
                          'Allow Orders by Store',
                          'Company Name/Personal Name',
                          'Customer Type',
-                         'Customer Channel',
+                         //'Customer Channel',
                          'Tax ID',
                          'Date Registered At Store',
                          'Registered Store ID',
                          'Last Login Date'
 
-                    ]);
+                    ]);      
                     $sheet->row(1, function($row) {
                         $row->setBackground('#000000');
                     });
@@ -570,11 +570,11 @@ class MembersRepository extends BaseRepository
                             sprintf('="%s"', array_get($vData, 'phone', '')),
                             sprintf('="%s"', array_get($vData, 'makro_member_card', '')),
                             //
-                            $this->_unit->removeFirstInjection(array_get($vData, 'allow_order', '')),
+                           // $this->_unit->removeFirstInjection(array_get($vData, 'allow_order', '')),
                             //
                             $this->_unit->removeFirstInjection(array_get($vData, 'business.shop_name', '')),
                             $this->_unit->removeFirstInjection($customer_type),
-                            $this->getNameCustomerChannel($vData['customer_channel']),
+                            //$this->getNameCustomerChannel($vData['customer_channel']),
                             sprintf('="%s"', array_get($vData, 'tax_id', '')),
                             !empty($vData['makro_register_date'])? '="'.date('d/m/Y',strtotime($vData['makro_register_date'])). '"':'',
                             '="'.array_get($vData, 'makro_register_store_id', ''). '"',
@@ -620,7 +620,7 @@ class MembersRepository extends BaseRepository
                     'username'                => $this->checkEmpty($vData['username'], $params['search'][1]['value']),
                     'phone'                   => $this->checkEmpty($vData['phone'], $params['search'][4]['value']),
                     'makro_member_card'       => $this->checkEmpty($vData['makro_member_card'], $params['search'][5]['value']),
-                    'allow_order'             => $this->checkEmpty($vData['allow_order'], $params['search'][11]['value']),
+                    //'allow_order'             => $this->checkEmpty($vData['allow_order'], $params['search'][11]['value']),
                     'shop_name'               => $this->checkEmpty($vData['business']['shop_name'], $params['search'][6]['value']),
                     'shop_type'               => $this->checkEmpty($customer_type, $params['search'][7]['value']),
                     'tax_id'                  => $this->checkEmpty($vData['tax_id'], $params['search'][8]['value']),
@@ -630,7 +630,7 @@ class MembersRepository extends BaseRepository
                     'action'                  => '<a href="' . url('/member/' . $vData['online_customer_id'] . '/edit') . '"><i class="icon-pencil"></i></a>',
                     'delete_action'           => '<i onclick="' . $delete_action . '" class="icon-trash ' . $activate_class . '"></i>',
                     'email'                   => $this->checkEmpty($vData['email'], ''),
-                    'customer_channel'        => isset($vData['customer_channel']) ? $this->getNameCustomerChannel($vData['customer_channel'] ) : ''
+                    //'customer_channel'        => isset($vData['customer_channel']) ? $this->getNameCustomerChannel($vData['customer_channel'] ) : ''
                 ];
             }
         }

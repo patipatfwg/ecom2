@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="form-group">
-            {{ Form::button('Login <i class="icon-arrow-right14 position-right"></i>', [
+            {{ Form::button('Loginn <i class="icon-arrow-right14 position-right"></i>', [
                 'type'  => 'submit',
                 'class' => 'btn bg-danger-600 btn-block loading'
             ]) }}
